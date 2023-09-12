@@ -11,20 +11,39 @@ datasource db {
 }
 
 model User {
-  idUser     String    @id @default(uuid())
-  email      String    @unique
+  idUser     String     @id @default(uuid())
+  email      String     @unique
   imgProfile String
-  username   String?   @unique
+  username   String?    @unique
   name       String?
-  balance    Balance[]
+  balances   Balance[]
+  movements  Movement[]
 }
 
 model Balance {
-  idBalance  Int     @id @default(autoincrement())
-  month      Int
-  year       Int
-  earnings   Int?
-  expenses   Int?
-  User       User?   @relation(fields: [userIdUser], references: [idUser])
-  userIdUser String?
+  idBalance Int    @id @default(autoincrement())
+  userId    String
+  month     Int
+  year      Int
+  earnings  Float? // Utiliza Float para representar valores con decimales
+  expenses  Float? // Utiliza Float para representar valores con decimales
+  User      User?  @relation(fields: [userId], references: [idUser])
+}
+
+model Movement {
+  idMovement   Int          @id @default(autoincrement())
+  userId       String
+  month        Int
+  year         Int
+  earnings     Float?
+  expenses     Float?
+  typeId       Int
+  User         User         @relation(fields: [userId], references: [idUser])
+  TypeMovement TypeMovement @relation(fields: [typeId], references: [idTypeMovement])
+}
+
+model TypeMovement {
+  idTypeMovement Int        @id @default(autoincrement())
+  description    String
+  movements      Movement[]
 }
