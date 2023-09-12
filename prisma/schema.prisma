@@ -32,12 +32,11 @@ model Balance {
 
 model Movement {
   idMovement   Int          @id @default(autoincrement())
-  userId       String
-  month        Int
-  year         Int
-  earnings     Float?
-  expenses     Float?
   typeId       Int
+  userId       String
+  createdAt    DateTime
+  description  String
+  value        Float
   User         User         @relation(fields: [userId], references: [idUser])
   TypeMovement TypeMovement @relation(fields: [typeId], references: [idTypeMovement])
 }
