@@ -21,11 +21,10 @@ model User {
 
 model Balance {
   idBalance  Int     @id @default(autoincrement())
-  idUser     Int
-  email      String  @unique
-  imgProfile String
-  username   String? @unique
-  name       String?
+  month      Int
+  year       Int
+  earnings   Int?
+  expenses   Int?
   User       User?   @relation(fields: [userIdUser], references: [idUser])
   userIdUser String?
 }
