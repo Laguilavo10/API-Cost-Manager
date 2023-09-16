@@ -1,16 +1,21 @@
-
 import express from 'express'
-require('dotenv').config()
+import { config } from 'dotenv'
+
+config()
+
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT ?? 3000
 
-// app.use(express.json())
-
-app.post('/:user/', (req, res) => {
-  console.log(req.body)
+app.get('/', (_, res) => {
   res.send('Hello World!')
 })
 
 app.listen(port, () => {
+  // Start listening for requests.
   console.log(`Example app listening on port ${port}`)
+})
+
+app.post('/user', (req, res) => {
+  console.log(req.body)
+  res.send('POST request to the homepage')
 })
