@@ -22,19 +22,21 @@ model User {
 
 model Balance {
   idBalance Int    @id @default(autoincrement())
-  userId    String
+  userId    String @unique
   month     Int
   year      Int
   earnings  Float? // Utiliza Float para representar valores con decimales
   expenses  Float? // Utiliza Float para representar valores con decimales
   User      User?  @relation(fields: [userId], references: [idUser])
+
+  @@unique([userId, month, year], name: "unique_month_year_per_user")
 }
 
 model Movement {
-  idMovement   Int          @id @default(autoincrement())
-  typeId       Int
+  idMovement   String       @id @default(uuid())
   userId       String
-  createdAt    DateTime
+  typeId       Int
+  createdAt    DateTime     @default(now())
   description  String
   value        Float
   User         User         @relation(fields: [userId], references: [idUser])
