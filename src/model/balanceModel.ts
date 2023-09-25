@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { prisma } from '../prisma-client'
 
 export class BalanceModel {

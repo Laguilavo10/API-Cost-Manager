@@ -1,7 +1,5 @@
-import type { Request, Response } from 'express'
 import { BalanceModel } from '../model/balanceModel'
-
-type ControllerFunction<T = void> = (req: Request, res: Response) => Promise<T>
+import type { ControllerFunction } from '../types'
 
 export class BalanceController {
   static getBalance: ControllerFunction = async (req, res) => {
