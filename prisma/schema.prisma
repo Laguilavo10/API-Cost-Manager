@@ -13,7 +13,6 @@ datasource db {
 model User {
   idUser      String     @id @default(uuid())
   email       String     @unique
-  imgProfile  String?
   username    String?    @unique
   name        String?
   balances    Balance[]
