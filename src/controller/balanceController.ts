@@ -4,20 +4,18 @@ import type { ControllerFunction } from '../types'
 export class BalanceController {
   static getBalance: ControllerFunction = async (req, res) => {
     const { user } = req.query
+    const { year, month } = req.query
 
     if (user === undefined || user === null) {
-      res.status(404).send('Its necessary a user on the query params')
+      res.status(404).send('Its necessary a id on the query params')
       return
     }
 
-    const result = await BalanceModel.getCurrentBalance({
-      user: user.toLocaleString()
+    const result = await BalanceModel.getBalance({
+      month: Number(month),
+      year: Number(year)
     })
-
-    if (result === null) {
-      res.status(404).send('User not found')
-      return
-    }
+    console.log(result)
 
     res.status(200).json(result)
   }

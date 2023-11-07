@@ -1,10 +1,13 @@
 import { prisma } from '../prisma-client'
 
 export class BalanceModel {
-  static async getCurrentBalance({ user }: { user: string }) {
-    const result = await prisma.balance.findFirst({
+  static async getBalance({ year, month }: { year: number, month: number }) {
+    const condition = isNaN(month) ? { year } : { year, month }
+    const result = await prisma.balance.findMany({
       where: {
-        userId: user
+        earnings: { not: null },
+        expenses: { not: null },
+        ...condition
       }
     })
     return result
