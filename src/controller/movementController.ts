@@ -3,7 +3,8 @@ import type { ControllerFunction } from '../types'
 
 export class MovementController {
   static getMovements: ControllerFunction = async (req, res) => {
-    const { user, limit } = req.query
+    const user = req.user
+    const { limit } = req.query
 
     if (user === undefined || user === null) {
       res.status(404).send('Its necessary a id on the query params')
@@ -27,7 +28,7 @@ export class MovementController {
     console.log('hola')
 
     const { id } = req.params
-    const { user } = req.query
+    const user = req.user
 
     if (user === undefined || user === null) {
       res.status(404).send('Its necessary a id on the query params')
@@ -49,8 +50,8 @@ export class MovementController {
   }
 
   static getMovementsByDate: ControllerFunction = async (req, res) => {
-    const { user, initialDate, finalDate } = req.query
-    console.log(user, initialDate, finalDate)
+    const { initialDate, finalDate } = req.query
+    const user = req.user
 
     if (user === undefined || user === null) {
       res.status(404).send('Its necessary a id on the query params')
@@ -79,9 +80,7 @@ export class MovementController {
   }
 
   static createMovement: ControllerFunction = async (req, res) => {
-    console.log('llego')
-
-    const { user } = req.query
+    const user = req.user
     const { date, typeMovement, description, amount, methodPayment } = req.body
 
     if (user === undefined || user === null) {
@@ -112,7 +111,7 @@ export class MovementController {
   }
 
   static deleteMovement: ControllerFunction = async (req, res) => {
-    const { user } = req.query
+    const user = req.user
     const { id } = req.params
 
     if (user === undefined || user === null) {
@@ -134,7 +133,7 @@ export class MovementController {
   }
 
   static updateMovement: ControllerFunction = async (req, res) => {
-    const { user } = req.query
+    const user = req.user
     const { id } = req.params
     const { createdAt, typeId, description, value, methodPaymentId } = req.body
 

@@ -3,7 +3,7 @@ import type { ControllerFunction } from '../types'
 
 export class BalanceController {
   static getBalance: ControllerFunction = async (req, res) => {
-    const { user } = req.query
+    const user = req.user
     const { year, month } = req.query
 
     if (user === undefined || user === null) {
@@ -15,7 +15,7 @@ export class BalanceController {
       month: Number(month),
       year: Number(year)
     })
-    console.log(result)
+    // console.log(result)
 
     res.status(200).json(result)
   }
