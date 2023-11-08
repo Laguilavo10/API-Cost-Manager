@@ -3,8 +3,9 @@ import 'dotenv/config'
 import { balanceRouter } from './router/balance'
 import { movementRouter } from './router/movement'
 import cors from 'cors'
-import { validateAccessToken } from './middlewares/OAuth'
+import { validateAccessToken, decodeToken } from './middlewares/OAuth'
 import { errorHandler } from './middlewares/error'
+import { userRouter } from './router/user'
 
 const port = process.env.PORT ?? 3000
 
@@ -14,11 +15,13 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(validateAccessToken)
+app.use(decodeToken)
 
 // endpoints
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+app.use('/user', userRouter)
 app.use('/balance', balanceRouter)
 app.use('/movement', movementRouter)
 

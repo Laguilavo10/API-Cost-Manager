@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  idUser      String     @id @default(uuid())
-  email       String     @unique
-  username    String?    @unique
-  name        String?
-  balances    Balance[]
-  movements   Movement[]
+  idUser    String     @id @default(uuid())
+  email     String    @unique
+  username  String?
+  name      String?
+  balances  Balance[]
+  movements Movement[]
 }
 
 model Balance {
@@ -27,6 +27,7 @@ model Balance {
   earnings  Float?
   expenses  Float?
   User      User?  @relation(fields: [userId], references: [idUser])
+
   @@unique([userId, month, year], name: "unique_month_year_per_user")
 }
 

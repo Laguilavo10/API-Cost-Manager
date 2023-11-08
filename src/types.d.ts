@@ -1,7 +1,10 @@
 import type { Request, Response, NextFunction } from 'express'
 
+interface RequestWithUser extends Request {
+  user?: string
+}
 export type ControllerFunction<T = void> = (
-  req: Request,
+  req: RequestWithUser,
   res: Response
 ) => Promise<T>
 
@@ -19,4 +22,15 @@ export interface Movement {
   description: string
   value: number
   methodPaymentId: MethodPayment
+}
+
+export interface DecodedToken {
+  id_user: string
+  iss: string
+  sub: string
+  aud: string[]
+  iat: number
+  exp: number
+  azp: string
+  scope: string
 }
