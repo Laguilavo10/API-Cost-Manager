@@ -6,7 +6,7 @@
     "tsc": "tsc ",
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
     "build": "npm run tsc",
-    "start": "npm run build && node dist/index.js",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prisma format",
     "open-studio": "npx prisma studio",
