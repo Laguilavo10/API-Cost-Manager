@@ -1,7 +1,8 @@
 import { auth } from 'express-oauth2-jwt-bearer'
 import jwt from 'jsonwebtoken'
 import { AUTH0_AUDIENCE, AUTH0_DOMAIN, PUBLIC_KEY } from '../constant/cons'
-import type { ControllerMiddleware, DecodedToken } from '../types'
+import type { DecodedToken, RequestWithUser } from '../types'
+import type { NextFunction } from 'express'
 
 export const validateAccessToken = auth({
   issuerBaseURL: `https://${AUTH0_DOMAIN}`,
@@ -13,10 +14,10 @@ export const validateAccessToken = auth({
 //   user?: string
 // }
 
-export const decodeToken: ControllerMiddleware<any> = async (
-  req,
-  res,
-  next
+export const decodeToken = async (
+  req: RequestWithUser,
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const authorizationHeader = req?.headers?.authorization
@@ -24,13 +25,13 @@ export const decodeToken: ControllerMiddleware<any> = async (
       authorizationHeader === undefined ||
       !authorizationHeader.startsWith('Bearer ')
     ) {
-      return res
-        .status(401)
-        .json({ message: 'Token de acceso no proporcionado' })
+      // @ts-expect-error idk
+      return res.statusText(401).json({ message: 'Token de acceso no proporcionado' })
     }
 
     const token = authorizationHeader.split(' ')[1]
     if (token === undefined) {
+      // @ts-expect-error idk
       return res.status(401).json({ message: 'Token de acceso no válido' })
     }
 
@@ -42,6 +43,7 @@ export const decodeToken: ControllerMiddleware<any> = async (
     next()
   } catch (error) {
     console.error(error)
+    // @ts-expect-error idk
     return res.status(401).json({ message: 'Token de acceso no válido' })
   }
 }
