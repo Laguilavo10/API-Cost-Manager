@@ -13,9 +13,9 @@ export class BalanceController {
 
     const result = await BalanceModel.getBalance({
       month: Number(month),
-      year: Number(year)
+      year: Number(year),
+      user
     })
-    // console.log(result)
 
     res.status(200).json(result)
   }

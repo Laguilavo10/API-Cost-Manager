@@ -72,9 +72,9 @@ export class MovementController {
 
     const result = await MovementModel.getMovementsByDate({
       initialDate: initialDateParsed,
-      finalDate: finalDateParsed
+      finalDate: finalDateParsed,
+      user
     })
-    console.log(result)
 
     res.status(200).json(result)
   }

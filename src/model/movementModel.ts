@@ -45,13 +45,16 @@ export class MovementModel {
 
   static async getMovementsByDate({
     initialDate,
-    finalDate
+    finalDate,
+    user
   }: {
     initialDate: Date
     finalDate: Date
+    user: string
   }) {
     const result = await prisma.movement.findMany({
       where: {
+        userId: user,
         createdAt: {
           gte: initialDate,
           lte: finalDate
