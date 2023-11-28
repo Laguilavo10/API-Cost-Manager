@@ -59,6 +59,9 @@ export class MovementModel {
           gte: initialDate,
           lte: finalDate
         }
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     })
     return result
