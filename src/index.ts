@@ -15,7 +15,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(validateAccessToken)
-// @ts-expect-error idk
 app.use(decodeToken)
 
 // endpoints
