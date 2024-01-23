@@ -63,13 +63,10 @@ export class MovementController {
       return
     }
 
-    const initialDateParsed = new Date(initialDate?.toLocaleString())
+    const initialDateParsed = new Date(initialDate as string)
     const finalDateParsed = new Date(
-      finalDate?.toString() ?? initialDate?.toLocaleString()
+      (finalDate as string) ?? (initialDate as string)
     )
-    // finalDateParsed.setHours(23, 59, 59, 999)
-    // console.log(initialDateParsed, finalDateParsed)
-
     const result = await MovementModel.getMovementsByDate({
       initialDate: initialDateParsed,
       finalDate: finalDateParsed,
@@ -81,13 +78,15 @@ export class MovementController {
 
   static createMovement: ControllerFunction = async (req, res) => {
     const user = req.user
-    const { date, typeMovement, description, amount, methodPayment } = req.body
-
+    const { date, typeMovement, description, amount, methodPayment, category } =
+      req.body
     if (user === undefined || user === null) {
       res.status(404).send('Its necessary a id on the query params')
       return
     }
     let result
+    const categoryId =
+      category === null || typeMovement === '1' ? null : Number(category)
     try {
       result = await MovementModel.createMovement({
         date,
@@ -95,7 +94,8 @@ export class MovementController {
         typeMovement: Number(typeMovement),
         description,
         amount: Number(amount),
-        methodPayment: Number(methodPayment)
+        methodPayment: Number(methodPayment),
+        category: categoryId
       })
     } catch (error) {
       console.log(error)
@@ -135,21 +135,30 @@ export class MovementController {
   static updateMovement: ControllerFunction = async (req, res) => {
     const user = req.user
     const { id } = req.params
-    const { createdAt, typeId, description, value, methodPaymentId } = req.body
+    const {
+      createdAt,
+      typeId,
+      description,
+      value,
+      methodPaymentId,
+      categoryId
+    } = req.body
 
     if (user === undefined || user === null) {
       res.status(404).send('Its necessary a id on the query params')
       return
     }
-    console.log(createdAt)
 
+    const category =
+      categoryId === null || typeId === '1' ? null : Number(categoryId)
     const result = await MovementModel.updateMovement(user.toLocaleString(), {
       idMovement: id,
       createdAt,
       typeId: Number(typeId),
       description,
       value: Number(value),
-      methodPaymentId: Number(methodPaymentId)
+      methodPaymentId: Number(methodPaymentId),
+      categoryId: category
     })
 
     if (result === null) {

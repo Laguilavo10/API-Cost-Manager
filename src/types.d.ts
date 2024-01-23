@@ -22,6 +22,7 @@ export interface Movement {
   description: string
   value: number
   methodPaymentId: MethodPayment
+  categoryId?: Category
 }
 
 export interface DecodedToken {

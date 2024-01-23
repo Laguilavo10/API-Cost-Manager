@@ -2,7 +2,7 @@ import { prisma } from '../prisma-client'
 import type { Movement } from '../types'
 
 export class MovementModel {
-  static async getMovements({ user, limit }: { user: string, limit?: number }) {
+  static async getMovements({ user, limit }: { user: string; limit?: number }) {
     if (limit === undefined) {
       const result = await prisma.movement.findMany({
         where: {
@@ -73,7 +73,8 @@ export class MovementModel {
     typeMovement,
     description,
     amount,
-    methodPayment
+    methodPayment,
+    category
   }: {
     date?: Date
     user: string
@@ -81,6 +82,7 @@ export class MovementModel {
     description: string
     amount: number
     methodPayment: number
+    category: number | null
   }) {
     const result = await prisma.movement.create({
       data: {
@@ -89,11 +91,10 @@ export class MovementModel {
         typeId: typeMovement,
         description,
         value: amount,
-        methodPaymentId: methodPayment
+        methodPaymentId: methodPayment,
+        categoryId: category
       }
     })
-    console.log('uwu', result)
-
     return result
   }
 
@@ -108,7 +109,8 @@ export class MovementModel {
         typeId: newData.typeId,
         description: newData.description,
         value: newData.value,
-        methodPaymentId: newData.methodPaymentId
+        methodPaymentId: newData.methodPaymentId,
+        categoryId: newData.categoryId
       }
     })
 
