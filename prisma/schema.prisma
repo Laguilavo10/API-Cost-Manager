@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   idUser    String     @id @default(uuid())
-  email     String    @unique
+  email     String     @unique
   username  String?
   name      String?
   balances  Balance[]
@@ -39,9 +39,11 @@ model Movement {
   description     String
   value           Float
   methodPaymentId Int
+  categoryId      Int?
   User            User          @relation(fields: [userId], references: [idUser])
   TypeMovement    TypeMovement  @relation(fields: [typeId], references: [idTypeMovement])
   MethodPayment   MethodPayment @relation(fields: [methodPaymentId], references: [idMethodPayment])
+  Category        Category?     @relation(fields: [categoryId], references: [idCategory])
 }
 
 model TypeMovement {
@@ -54,4 +56,11 @@ model MethodPayment {
   idMethodPayment Int        @id @default(autoincrement())
   name            String
   movements       Movement[]
+}
+
+model Category {
+  idCategory Int        @id @default(autoincrement())
+  name       String
+  limit      Float?
+  movements  Movement[]
 }
