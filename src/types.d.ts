@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 
 interface RequestWithUser extends Request {
-  user?: string
+  user: string
 }
 export type ControllerFunction<T = void> = (
   req: RequestWithUser,
