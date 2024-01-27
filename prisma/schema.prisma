@@ -11,12 +11,13 @@ datasource db {
 }
 
 model User {
-  idUser    String     @id @default(uuid())
-  email     String     @unique
-  username  String?
-  name      String?
-  balances  Balance[]
-  movements Movement[]
+  idUser          String            @id @default(uuid())
+  email           String            @unique
+  username        String?
+  name            String?
+  balances        Balance[]
+  movements       Movement[]
+  CategoryPerUser CategoryPerUser[]
 }
 
 model Balance {
@@ -59,8 +60,17 @@ model MethodPayment {
 }
 
 model Category {
-  idCategory Int        @id @default(autoincrement())
-  name       String
+  idCategory      Int               @id @default(autoincrement())
+  name            String
+  movements       Movement[]
+  CategoryPerUser CategoryPerUser[]
+}
+
+model CategoryPerUser {
+  userId     String
+  categoryId Int
   limit      Float?
-  movements  Movement[]
+  User       User     @relation(fields: [userId], references: [idUser])
+  Category   Category @relation(fields: [categoryId], references: [idCategory])
+  @@id([userId, categoryId])
 }
