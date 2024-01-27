@@ -6,6 +6,7 @@ import cors from 'cors'
 import { validateAccessToken, decodeToken } from './middlewares/OAuth'
 import { errorHandler } from './middlewares/error'
 import { userRouter } from './router/user'
+import { categoriesRouter } from './router/categories'
 
 const port = process.env.PORT ?? 3000
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter)
 app.use('/balance', balanceRouter)
 app.use('/movement', movementRouter)
+app.use('/categories', categoriesRouter)
 
 // error handler
 app.use(errorHandler)
