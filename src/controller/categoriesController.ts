@@ -17,6 +17,35 @@ export class CategoryController {
     res.status(200).json(result)
   }
 
+  static getCategoriesAmount: ControllerFunction = async (req, res) => {
+    const user = req.user
+
+    const { initialDate, finalDate } = req.query
+
+    if (initialDate === undefined || initialDate === null) {
+      res.status(404).send('Its necessary a initialDate on the query params')
+      return
+    }
+
+    const initialDateParsed = new Date(initialDate as string)
+    const finalDateParsed = new Date(
+      (finalDate as string) ?? (initialDate as string)
+    )
+
+    const result = await CategoryModel.getCategoriesAmount({
+      user: user.toLocaleString(),
+      initialDate: initialDateParsed,
+      finalDate: finalDateParsed
+    })
+
+    if (result === null) {
+      res.status(404).send('User not found')
+      return
+    }
+
+    res.status(200).json(result)
+  }
+
   static updateMovement: ControllerFunction = async (req, res) => {
     const user = req.user
     const { categoryId, limit } = req.body
