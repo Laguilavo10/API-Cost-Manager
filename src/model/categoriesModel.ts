@@ -23,7 +23,7 @@ export class CategoryModel {
     finalDate: Date
   }) {
     const result = await prisma.$queryRaw`
-      SELECT c.idCategory as categoryId, c.name, COALESCE(SUM(m.value), 0) as amount
+      SELECT c.idCategory as categoryId, c.name, COALESCE(SUM(m.value), 0) as amount, cu.limit
         FROM Movement m
         RIGHT JOIN Category c ON m.categoryId = c.idCategory AND m.userId = ${user} AND m.createdAt >= ${initialDate} AND m.createdAt <= ${finalDate} AND m.typeId = 2
         LEFT JOIN categoryperuser cu ON  cu.categoryId = c.idCategory and cu.userId = ${user}
