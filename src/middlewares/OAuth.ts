@@ -35,12 +35,14 @@ export const decodeToken = async (
       algorithms: ['RS256']
     }) as DecodedToken
 
-    if (decoded.id_user === undefined || decoded.id_user === null) {
-      res.status(404).send('Its necessary a id on the query params')
-      return
+    if (req.url !== '/user') {
+      if (decoded.id_user === undefined || decoded.id_user === null) {
+        res.status(401).send('Its necessary a id on the query params')
+        return
+      }
     }
 
-    (req as RequestWithUser).user = decoded.id_user
+    ;(req as RequestWithUser).user = decoded.id_user
     next()
   } catch (error) {
     console.error(error)
