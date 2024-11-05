@@ -2,12 +2,10 @@ import { prisma } from '../prisma-client'
 
 export class UserModel {
   static async registerNew({
-    id,
     email,
     username,
     name
   }: {
-    id: any
     email: string
     username: string
     name: string
