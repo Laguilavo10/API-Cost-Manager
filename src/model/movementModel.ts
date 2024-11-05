@@ -2,7 +2,7 @@ import { prisma } from '../prisma-client'
 import type { Movement } from '../types'
 
 export class MovementModel {
-  static async getMovements({ user, limit }: { user: string; limit?: number }) {
+  static async getMovements({ user, limit }: { user: string, limit?: number }) {
     if (limit === undefined) {
       const result = await prisma.movement.findMany({
         where: {
